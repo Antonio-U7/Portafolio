@@ -1,0 +1,16 @@
+<html>
+<head><title>LOG IN (SESIONES)</title>
+</head>
+<body>
+<h1>Favor de llenar datos</h1>
+<form action="EjercicioCaptchaSession.php" method="post">
+User: <input type="text" name="user"><br>
+Pin: <input type="text" name="pin"><br>
+ Captcha: <br>
+    <img src="creaCptcha.php" border=1><br>
+    <form method="POST" action="verifica.php">
+        <input type="text" name="codigo" width="25" /> 
+<input type="submit" name="enviar">
+</form>
+</body> 
+</html> 
