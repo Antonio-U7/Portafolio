@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio Pro | Parcial 3 Programación Web</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            /* COLORES TEMÁTICOS */
+            --notion-bg: #FFF0DD;      /* Crema suave */
+            --notion-card: #FFFFFF;    /* Blanco */
+            --notion-text: #37352F;    /* Gris carbón */
+            --notion-secondary: #86B0BD; /* Azul acero (Iluminación) */
+            --notion-border: #6B4F3B;   /* Café fuerte (Bordes) */
+            --notion-accent: #E2A16F;   /* Terracota */
+        }
+
+        body {
+            background-color: var(--notion-bg);
+            color: var(--notion-text);
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* Cuadrícula Bento Asimétrica */
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        .bento-item {
+            background: var(--notion-card);
+            border: 2px solid var(--notion-border);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            height: 240px; 
+        }
+
+        /* EFECTO HOVER */
+        .bento-item:hover {
+            transform: scale(1.03) translateY(-6px);
+            border-color: var(--notion-secondary); 
+            box-shadow: 0 20px 40px rgba(107, 79, 59, 0.1), 0 0 15px rgba(134, 176, 189, 0.3);
+            z-index: 10;
+        }
+
+        .col-long { grid-column: span 3; }
+        .col-short { grid-column: span 2; }
+
+        @media (max-width: 768px) {
+            .section-grid { grid-template-columns: 1fr; }
+            .col-long, .col-short { grid-column: span 1; }
+            .bento-item { height: 220px; }
+        }
+
+        /* Navegación del Índice */
+        .nav-link {
+            transition: all 0.3s ease;
+            border: 2px solid #E5E7EB;
+            color: var(--notion-text);
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .nav-link:hover {
+            border-color: var(--notion-accent);
+            color: var(--notion-accent);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(226, 161, 111, 0.15);
+        }
+
+        .section-number {
+            color: var(--notion-accent);
+            border-bottom: 4px solid var(--notion-accent);
+        }
+
+        #project-modal {
+            background: rgba(55, 53, 47, 0.7);
+            backdrop-filter: blur(12px);
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+    </style>
+</head>
+<body class="selection:bg-[#E2A16F]/30">
+
+    <!-- ==========================================
+         CABECERA / PRESENTACIÓN
+         ========================================== -->
+    <header class="max-w-7xl mx-auto px-6 pt-16 pb-12 min-h-[50vh] flex items-center">
+        <div class="w-full flex flex-col lg:flex-row items-center justify-between gap-12">
+            
+            <!-- CONTENEDOR DE DATOS PERSONALES -->
+            <div class="flex-1 space-y-6 text-center lg:text-left">
+                <span class="inline-block px-5 py-2 bg-white border-2 border-[#D1D3D4] rounded-full text-[11px] font-black uppercase tracking-[0.4em] text-[#E2A16F] shadow-sm">
+                    Portfolio Programacion Web 2
+                </span>
+                
+                <div class="space-y-3">
+                    <h1 class="text-5xl md:text-7xl font-black tracking-tighter text-[#37352F] leading-tight">Parcial 3</h1>
+                    
+                    <div class="space-y-2 pt-1">
+                        <div class="flex items-center justify-center lg:justify-start gap-3 text-[#6B4F3B]">
+                            <div class="w-8 h-8 rounded-full bg-[#6B4F3B]/10 flex items-center justify-center">
+                                <i class="fa-solid fa-user-tag text-[10px]"></i>
+                            </div>
+                            <!-- EDITAR AQUÍ: Tu nombre -->
+                            <p class="text-lg md:text-xl font-bold tracking-tight italic">Maestra: Roxana Georgina Herrera Herrera</p>
+                        </div>
+                        <div class="flex items-center justify-center lg:justify-start gap-3 text-[#86B0BD]">
+                            <div class="w-8 h-8 rounded-full bg-[#86B0BD]/10 flex items-center justify-center">
+                                <i class="fa-solid fa-graduation-cap text-[10px]"></i>
+                            </div>
+                            <!-- EDITAR AQUÍ: Tu materia o carrera -->
+                            
+                            <p class="text-lg md:text-xl font-bold tracking-tight italic">Estudiante: Jesus Antonio Rodriguez Vazquez 186727</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="text-lg md:text-xl text-gray-500 font-medium leading-relaxed max-w-lg">
+                    Hola este es mi portafolio de Tercer Parcial de Programacion Web 2, en este parcial integramos ejercicios con PDF, conexion a bases de datos
+                    tambien utilizamos login y capcha para guardar datos del usuario localmente <br> Aqui esta mi recopilacion
+                </p>
+            </div>
+
+            <!-- CONTENEDOR DEL ÍNDICE -->
+            <div class="w-full lg:w-auto lg:min-w-[400px] flex flex-col items-center justify-center">
+                <div class="bg-white/30 p-6 rounded-[35px] border-2 border-white/50 backdrop-blur-sm w-full">
+                    <h3 class="text-[10px] font-black uppercase tracking-[0.6em] text-gray-400 mb-6 text-center">Índice</h3>
+                    <nav class="grid grid-cols-2 grid-rows-3 gap-3">
+                        <a href="#sec-1" class="nav-link px-4 py-4 rounded-2xl text-[9px] font-extrabold uppercase tracking-widest">01-05. PDF</a>
+                        <a href="#sec-2" class="nav-link px-4 py-4 rounded-2xl text-[9px] font-extrabold uppercase tracking-widest">06-08. COOKIES</a>
+                        <a href="#sec-3" class="nav-link px-4 py-4 rounded-2xl text-[9px] font-extrabold uppercase tracking-widest">09-10. SESSIONS</a>
+                        <a href="#sec-4" class="nav-link px-4 py-4 rounded-2xl text-[9px] font-extrabold uppercase tracking-widest">11-13. CAPCHA</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 pb-24 space-y-24">
+
+        <!-- ==========================================
+             SECCIÓN 01: TRABAJOS / PROYECTOS
+             ========================================== -->
+        <section id="sec-1" class="scroll-mt-24">
+            <h2 class="text-2xl md:text-3xl font-black uppercase tracking-tight text-[#37352F] mb-10 flex items-center gap-4">
+                <span class="section-number pb-1">01</span> PDF'S Y CONEXION A BASES DE DATOS
+            </h2>
+            
+            <!-- CONTENEDOR BENTO: Aquí van tus trabajos -->
+            <div class="section-grid">
+                
+                <!-- PROYECTO 1: Ítem Largo (Ocupa 3 columnas) -->
+                <!-- EDITAR AQUÍ: Cambia los parámetros de la función openProject('Título', 'Descripción', 'URL_Imagen', 'Link_Demo', 'Link_Code') -->
+                <div class="bento-item col-long" 
+                     onclick="openProject('Mi primer PDF', '', 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000', 'trabajos/ej1_primerpdf.php', '#')">
+                    
+                    <!-- Imagen de portada del trabajo -->
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000" class="w-full h-full object-cover">
+                    
+                    <!-- Pie de la tarjeta -->
+                    <div class="absolute bottom-0 left-0 p-6 bg-white/95 w-full border-t-2 border-[#D1D3D4]">
+                        <h3 class="font-black text-xl">Mi primer PDF</h3>
+                        <p class="text-[10px] font-bold text-[#86B0BD] uppercase tracking-widest mt-1">Programa en PHP</p>
+                    </div>
+                </div>
+
+                <!-- PROYECTO 2: Ítem Corto (Ocupa 2 columnas, estilo icono) -->
+                <div class="bento-item col-short" 
+                     onclick="openProject('PDF con logo', '', '', 'trabajos/ej2_primerpdf_pie.php', '#')">
+                    <div class="p-8 h-full flex flex-col justify-between border-l-[10px] border-[#86B0BD]">
+                        <i class="fa-solid fa-shield-halved text-4xl text-[#86B0BD]"></i>
+                        <div>
+                            <h3 class="font-black text-xl leading-tight">PDF con logo</h3>
+                            <p class="text-[9px] text-gray-500 mt-1 font-black uppercase tracking-widest">Programa en PHP</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROYECTO 3: Estilo Color Sólido (Ocupa 2 columnas) -->
+                <div class="bento-item col-short" 
+                     onclick="openProject('Lista de clientes', '', '', 'trabajos/ej3_listapdf.pdf', '#')">
+                    <div class="p-8 h-full flex flex-col items-center justify-center text-center bg-[#E2A16F]/10">
+                        <div class="w-16 h-16 rounded-full bg-[#E2A16F] text-white flex items-center justify-center mb-4 shadow-md">
+                            <i class="fa-solid fa-wand-magic-sparkles text-2xl"></i>
+                        </div>
+                        <h3 class="font-black text-xl">Lista de clientes</h3>
+                    </div>
+                </div>
+
+                <!-- PROYECTO 4: Ítem Largo con Imagen -->
+                <div class="bento-item col-long" 
+                     onclick="openProject('Equipos de Futbol', '', 'https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1000', 'trabajos/Equipos.php', '#')">
+                    <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1000" class="w-full h-full object-cover">
+                    <div class="absolute bottom-0 left-0 p-6 bg-white/95 w-full border-t-2 border-[#D1D3D4]">
+                        <h3 class="font-black text-xl">Equipos de Futbol</h3>
+                    </div>
+                </div>
+                <!-- PROYECTO 5: Ítem Largo con Imagen -->
+                <div class="bento-item col-long" 
+                     onclick="openProject('Grafica de votos 2024', '', 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000', 'trabajos/futbol_pdf.php', '#')">
+                    
+                    <!-- Imagen de portada del trabajo -->
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000" class="w-full h-full object-cover">
+                    
+                    <!-- Pie de la tarjeta -->
+                    <div class="absolute bottom-0 left-0 p-6 bg-white/95 w-full border-t-2 border-[#D1D3D4]">
+                        <h3 class="font-black text-xl">Grafica de votos</h3>
+                        <p class="text-[10px] font-bold text-[#86B0BD] uppercase tracking-widest mt-1">Uso de colores y conexion a bases de datos</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <!-- SECCIÓN 02: OTROS CONTENIDOS -->
+         <section id="sec-2" class="scroll-mt-24">
+            <h2 class="text-2xl md:text-3xl font-black uppercase tracking-tight text-[#37352F] mb-10 flex items-center gap-4">
+                <span class="section-number pb-1">02</span> COOKIES
+            </h2>
+            
+            <!-- CONTENEDOR BENTO: Aquí van tus trabajos -->
+            <div class="section-grid">
+                
+                <!-- PROYECTO 1: Ítem Largo (Ocupa 3 columnas) -->
+                <!-- EDITAR AQUÍ: Cambia los parámetros de la función openProject('Título', 'Descripción', 'URL_Imagen', 'Link_Demo', 'Link_Code') -->
+                <div class="bento-item col-long" 
+                     onclick="openProject('Contador de visitas a una pagina', '', 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000', 'trabajos/cookies/contador_visitas/cookie.html', '#')">
+                    
+                    <!-- Imagen de portada del trabajo -->
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000" class="w-full h-full object-cover">
+                    
+                    <!-- Pie de la tarjeta -->
+                    <div class="absolute bottom-0 left-0 p-6 bg-white/95 w-full border-t-2 border-[#D1D3D4]">
+                        <h3 class="font-black text-xl">Contador de visitas a una pagina</h3>
+                        <p class="text-[10px] font-bold text-[#86B0BD] uppercase tracking-widest mt-1">Cookies</p>
+                    </div>
+                </div>
+
+                <!-- PROYECTO 2: Ítem Corto (Ocupa 2 columnas, estilo icono) -->
+                <div class="bento-item col-short" 
+                     onclick="openProject('Contador de visitas por persona', '', '', 'trabajos/cookies/contador_usuario/contador_visitas.php', '#')">
+                    <div class="p-8 h-full flex flex-col justify-between border-l-[10px] border-[#86B0BD]">
+                        <i class="fa-solid fa-shield-halved text-4xl text-[#86B0BD]"></i>
+                        <div>
+                            <h3 class="font-black text-xl leading-tight">Contador de visitas por persona</h3>
+                            <p class="text-[9px] text-gray-500 mt-1 font-black uppercase tracking-widest">cookies</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROYECTO 3: Estilo Color Sólido (Ocupa 2 columnas) -->
+                <div class="bento-item col-short" 
+                     onclick="openProject('Login con cookies', '', '', 'trabajos/cookies/inicio_sesion/login.html', '#')">
+                    <div class="p-8 h-full flex flex-col items-center justify-center text-center bg-[#E2A16F]/10">
+                        <div class="w-16 h-16 rounded-full bg-[#E2A16F] text-white flex items-center justify-center mb-4 shadow-md">
+                            <i class="fa-solid fa-wand-magic-sparkles text-2xl"></i>
+                        </div>
+                        <h3 class="font-black text-xl">Login con cookies</h3>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <!-- SECCIÓN 03: OTROS CONTENIDOS -->
+         <section id="sec-3" class="scroll-mt-24">
+            <h2 class="text-2xl md:text-3xl font-black uppercase tracking-tight text-[#37352F] mb-10 flex items-center gap-4">
+                <span class="section-number pb-1">03</span> SESSIONS
+            </h2>
+            
+            <!-- CONTENEDOR BENTO: Aquí van tus trabajos -->
+            <div class="section-grid">
+                
+                <!-- PROYECTO 1: Ítem Largo (Ocupa 3 columnas) -->
+                <!-- EDITAR AQUÍ: Cambia los parámetros de la función openProject('Título', 'Descripción', 'URL_Imagen', 'Link_Demo', 'Link_Code') -->
+                <div class="bento-item col-long" 
+                     onclick="openProject('Contador de visitas', '', 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000', 'trabajos/session/formSessionContador.html', '#')">
+                    
+                    <!-- Imagen de portada del trabajo -->
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000" class="w-full h-full object-cover">
+                    
+                    <!-- Pie de la tarjeta -->
+                    <div class="absolute bottom-0 left-0 p-6 bg-white/95 w-full border-t-2 border-[#D1D3D4]">
+                        <h3 class="font-black text-xl">Contador de visitas</h3>
+                        <p class="text-[10px] font-bold text-[#86B0BD] uppercase tracking-widest mt-1">SESSIONS</p>
+                    </div>
+                </div>
+
+                <!-- PROYECTO 2: Ítem Corto (Ocupa 2 columnas, estilo icono) -->
+                <div class="bento-item col-short" 
+                     onclick="openProject('Login con sesiones', '', '', 'trabajos/session/ej10_loginSession.html', '#')">
+                    <div class="p-8 h-full flex flex-col justify-between border-l-[10px] border-[#86B0BD]">
+                        <i class="fa-solid fa-shield-halved text-4xl text-[#86B0BD]"></i>
+                        <div>
+                            <h3 class="font-black text-xl leading-tight">Login con sesiones</h3>
+                            <p class="text-[9px] text-gray-500 mt-1 font-black uppercase tracking-widest">SESSIONS</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <!-- SECCIÓN 04: OTROS CONTENIDOS -->
+         <section id="sec-4" class="scroll-mt-24">
+            <h2 class="text-2xl md:text-3xl font-black uppercase tracking-tight text-[#37352F] mb-10 flex items-center gap-4">
+                <span class="section-number pb-1">04</span> CAPCHA
+            </h2>
+            
+            <!-- CONTENEDOR BENTO: Aquí van tus trabajos -->
+            <div class="section-grid">
+                
+                <!-- PROYECTO 1: Ítem Largo (Ocupa 3 columnas) -->
+                <!-- EDITAR AQUÍ: Cambia los parámetros de la función openProject('Título', 'Descripción', 'URL_Imagen', 'Link_Demo', 'Link_Code') -->
+                <div class="bento-item col-long" 
+                     onclick="openProject('Valida Capcha', '', 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000', 'trabajos/captcha/captchaForm.php', '#')">
+                    
+                    <!-- Imagen de portada del trabajo -->
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000" class="w-full h-full object-cover">
+                    
+                    <!-- Pie de la tarjeta -->
+                    <div class="absolute bottom-0 left-0 p-6 bg-white/95 w-full border-t-2 border-[#D1D3D4]">
+                        <h3 class="font-black text-xl">Valida Capcha</h3>
+                        <p class="text-[10px] font-bold text-[#86B0BD] uppercase tracking-widest mt-1">Capcha</p>
+                    </div>
+                </div>
+
+                <!-- PROYECTO 2: Ítem Corto (Ocupa 2 columnas, estilo icono) -->
+                <!-- <div class="bento-item col-short" 
+                     onclick="openProject('Login con Capcha', '', '', 'trabajos/', '#')">
+                    <div class="p-8 h-full flex flex-col justify-between border-l-[10px] border-[#86B0BD]">
+                        <i class="fa-solid fa-shield-halved text-4xl text-[#86B0BD]"></i>
+                        <div>
+                            <h3 class="font-black text-xl leading-tight">Login con Capcha</h3>
+                            <p class="text-[9px] text-gray-500 mt-1 font-black uppercase tracking-widest">Capcha</p>
+                        </div>
+                    </div>
+                </div> -->
+
+                <!-- PROYECTO 3: Estilo Color Sólido (Ocupa 2 columnas) -->
+                <div class="bento-item col-short" 
+                     onclick="openProject('Exposición', '', '', 'trabajos/TEMAS/10_Acceso Físico.pptx (1).pptx', '#')">
+                    <div class="p-8 h-full flex flex-col items-center justify-center text-center bg-[#E2A16F]/10">
+                        <div class="w-16 h-16 rounded-full bg-[#E2A16F] text-white flex items-center justify-center mb-4 shadow-md">
+                            <i class="fa-solid fa-wand-magic-sparkles text-2xl"></i>
+                        </div>
+                        <h3 class="font-black text-xl">Exposición</h3>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER: Redes Sociales -->
+    <footer class="border-t-2 border-[#D1D3D4] py-16 bg-white/40 mt-12">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="flex justify-center gap-6 mb-8">
+                <!-- EDITAR AQUÍ: Coloca tus links reales en href="..." -->
+                <a href="#" class="w-12 h-12 rounded-xl border-2 border-gray-200 flex items-center justify-center hover:bg-[#37352F] hover:text-white transition-all"><i class="fa-brands fa-github text-lg"></i></a>
+                <a href="#" class="w-12 h-12 rounded-xl border-2 border-gray-200 flex items-center justify-center hover:bg-[#86B0BD] hover:text-white transition-all"><i class="fa-brands fa-linkedin-in text-lg"></i></a>
+                <a href="#" class="w-12 h-12 rounded-xl border-2 border-gray-200 flex items-center justify-center hover:bg-[#E2A16F] hover:text-white transition-all"><i class="fa-solid fa-at text-lg"></i></a>
+            </div>
+            <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">© 2026 • Portafolio Parcial 3 • Desarrollo Web</p>
+        </div>
+    </footer>
+
+    <!-- ==========================================
+         MODAL DE PROYECTO (VENTANA EMERGENTE)
+         ========================================== -->
+    <div id="project-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4" onclick="closeProject()">
+        <div class="bg-white w-full max-w-4xl rounded-[35px] shadow-2xl overflow-hidden flex flex-col md:flex-row h-auto max-h-[85vh] border-[4px] border-[#6B4F3B]" onclick="event.stopPropagation()">
+            
+            <!-- Contenedor Imagen Izquierda -->
+            <div id="modal-img-container" class="w-full md:w-1/2 bg-[#F1F1EF] border-b-4 md:border-b-0 md:border-r-4 border-[#D1D3D4]">
+                <img id="modal-img" src="" class="w-full h-full object-cover">
+            </div>
+
+            <!-- Contenedor Texto Derecha -->
+            <div class="p-8 md:p-12 flex-1 flex flex-col justify-center relative">
+                <button onclick="closeProject()" class="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors text-xl font-bold">&times;</button>
+                
+                <span class="text-[9px] font-black uppercase tracking-widest text-[#E2A16F] border-b-2 border-[#E2A16F] inline-block mb-4 w-fit">Detalle del Trabajo</span>
+                <h2 id="modal-title" class="text-3xl md:text-5xl font-black mb-6 tracking-tighter leading-none">Título</h2>
+                <p id="modal-desc" class="text-base md:text-lg text-gray-500 leading-relaxed mb-8">Descripción...</p>
+                
+                <div class="flex gap-3">
+                    <!-- Los links se asignan mediante JavaScript -->
+                    <a id="modal-demo-btn" href="#" target="_blank" class="bg-[#37352F] text-white px-6 py-3 rounded-xl font-black text-xs uppercase tracking-widest hover:scale-105 transition-all inline-block text-center">Ver Trabajo</a>
+                    <a id="modal-code-btn" href="#" target="_blank" class="border-2 border-gray-200 px-6 py-3 rounded-xl font-black text-xs uppercase tracking-widest hover:border-[#6B4F3B] transition-all inline-block text-center"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         LÓGICA DE CONTROL (JAVASCRIPT)
+         ========================================== -->
+    <script>
+        const modal = document.getElementById('project-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDesc = document.getElementById('modal-desc');
+        const modalImg = document.getElementById('modal-img');
+        const imgContainer = document.getElementById('modal-img-container');
+        const demoBtn = document.getElementById('modal-demo-btn');
+        const codeBtn = document.getElementById('modal-code-btn');
+
+        /**
+         * Función para abrir el modal con los datos del trabajo
+         * @param {string} title - Título del trabajo
+         * @param {string} desc - Párrafo descriptivo
+         * @param {string} img - URL de la imagen (puede ser vacío "")
+         * @param {string} demoLink - Enlace a la demo en vivo
+         * @param {string} codeLink - Enlace al repositorio de código
+         */
+        function openProject(title, desc, img, demoLink, codeLink) {
+            modalTitle.innerText = title;
+            modalDesc.innerText = desc || "";
+            
+            // Asignación de links
+            demoBtn.href = demoLink || "#";
+            codeBtn.href = codeLink || "#";
+
+            // Manejo de imagen
+            if(img && img.trim() !== "") {
+                modalImg.src = img;
+                imgContainer.style.display = 'block';
+            } else {
+                imgContainer.style.display = 'none'; // Si no hay imagen, el texto ocupa todo el ancho
+            }
+
+            modal.style.display = 'flex';
+            setTimeout(() => { modal.style.opacity = '1'; }, 50);
+            document.body.style.overflow = 'hidden'; // Bloquea el scroll del fondo
+        }
+
+        function closeProject() {
+            modal.style.opacity = '0';
+            setTimeout(() => { modal.style.display = 'none'; }, 400);
+            document.body.style.overflow = 'auto'; // Restaura el scroll
+        }
+
+        // Cerrar al hacer clic fuera del contenido blanco
+        window.onclick = function(event) {
+            if (event.target == modal) closeProject();
+        }
+    </script>
+</body>
+</html>
